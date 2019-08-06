@@ -12,7 +12,8 @@ export default class App extends React.Component {
             repeatPassword: '',
             country: 'USA',
             gender: 'male',
-            policy: true
+            policy: true,
+            avatar: ''
         }
     }
 
@@ -31,6 +32,16 @@ export default class App extends React.Component {
         this.setState({
             [e.target.name]: e.target.checked
         })
+    };
+
+    onChangeFile = (e) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = (e) => {
+            this.setState({
+                avatar: e.target.result
+            })
+        };
     };
 
     getItems = (items) => {
@@ -142,6 +153,16 @@ export default class App extends React.Component {
                                     </label>
                             </div>
                         </div>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="avatar">Onload the avatar</label>
+                        <input
+                            type="file"
+                            className="form-control-file"
+                            id="avatar"
+                            name='avatar'
+                            onChange={this.onChangeFile}
+                        />
                     </div>
                     <button type="submit" className="btn btn-primary w-100" onClick={this.onSubmitForm}>
                         Submit
