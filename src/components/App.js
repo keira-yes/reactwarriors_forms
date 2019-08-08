@@ -13,13 +13,36 @@ export default class App extends React.Component {
             country: 'USA',
             gender: 'male',
             policy: true,
-            avatar: ''
+            avatar: '',
+            errors: {}
         }
     }
 
     onSubmitForm = (e) => {
         e.preventDefault();
-        console.log("submit", this.state)
+
+        const errors = {};
+
+        if (!this.state.username) {
+            errors.username = 'Please enter the username';
+        }
+
+        if (this.state.password.length < 5) {
+            errors.password = 'Password must be at least 5 characters';
+        }
+
+        if (this.state.repeatPassword !== this.state.password) {
+            errors.repeatPassword = 'Password must be the same';
+        }
+
+        if(Object.keys(errors).length > 0) {
+            this.setState({
+                errors
+            });
+        } else {
+            this.setState({errors: {}});
+            console.log("submit", this.state)
+        }
     };
 
     onChange = (e) => {
@@ -65,6 +88,7 @@ export default class App extends React.Component {
                             value={this.state.username}
                             onChange = {this.onChange}
                         />
+                        {this.state.errors.username ? <span>{this.state.errors.username}</span> : null}
                     </div>
                     <div className="form-group">
                         <label>Password</label>
@@ -76,6 +100,7 @@ export default class App extends React.Component {
                             value={this.state.password}
                             onChange = {this.onChange}
                         />
+                        {this.state.errors.password ? <span>{this.state.errors.password}</span> : null}
                     </div>
                     <div className="form-group">
                         <label>Repeat password</label>
@@ -87,6 +112,7 @@ export default class App extends React.Component {
                             value={this.state.repeatPassword}
                             onChange = {this.onChange}
                         />
+                        {this.state.errors.repeatPassword ? <span>{this.state.errors.repeatPassword}</span> : null}
                     </div>
                     <div className="form-group">
                         <label htmlFor="countries">Select country</label>
