@@ -12,6 +12,7 @@ export default class App extends React.Component {
             repeatPassword: '',
             country: 'USA',
             gender: 'male',
+            age: 16,
             policy: true,
             avatar: '',
             errors: {}
@@ -67,6 +68,36 @@ export default class App extends React.Component {
         };
     };
 
+    onIncrease = () => {
+        this.setState(
+            (prevState, prevProps) => ({
+                age: prevState.age + 1
+            }),
+            () => {
+                this.setState({
+                    errors: {
+                        age: this.state.age < 18 ? "You haven't 18 yet" : false
+                    }
+                })
+            }
+        )
+    };
+
+    onDecrease = () => {
+        this.setState(
+            (prevState, prevProps) => ({
+                age: prevState.age - 1
+            }),
+            () => {
+                this.setState({
+                    errors: {
+                        age: this.state.age < 18 ? "You haven't 18 yet" : false
+                    }
+                })
+            }
+        )
+    };
+
     getItems = (items) => {
         return items.map(item => {
             return <option value={item.name} key={item.id}>{item.name}</option>
@@ -74,7 +105,6 @@ export default class App extends React.Component {
     };
 
     render() {
-
         return (
             <div className="form-container card">
                 <form className="form card-body">
@@ -161,6 +191,30 @@ export default class App extends React.Component {
                             </div>
                         </div>
                     </fieldset>
+                    <div className="form-group">
+                        <label>Your age?</label>
+                        <button
+                            type="button"
+                            className="btn btn-dark"
+                            onClick={this.onDecrease}
+                        >-
+                        </button>
+                        <input
+                            type="number"
+                            className="form-control"
+                            name="age"
+                            placeholder="Enter age"
+                            value={this.state.age}
+                            onChange = {this.onChange}
+                        />
+                        {this.state.errors.age ? <span>{this.state.errors.age}</span> : null}
+                        <button
+                            type="button"
+                            className="btn btn-dark"
+                            onClick={this.onIncrease}
+                        >+
+                        </button>
+                    </div>
                     <div className="form-group row">
                         <div className="col-sm-4">Privacy policy</div>
                         <div className="col-sm-8">

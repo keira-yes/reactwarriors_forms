@@ -13,3 +13,12 @@ body {
 .invalid-feedback {
   display: block;
 }
+
+input[type="number"] {
+  display: inline-block;
+  width: 30%;
+}
+
+label {
+  display: block;
+}
